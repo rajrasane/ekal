@@ -90,7 +90,7 @@ export default function Navbar() {
                             </Link>
                         )}
 
-                        {/* Search - placeholder for now */}
+                        {/* Search - Not implemented for now */}
                         <button
                             aria-label="Search items"
                             className="text-zinc-600 hover:text-black transition-colors hidden sm:block p-1"

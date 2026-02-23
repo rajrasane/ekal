@@ -10,7 +10,7 @@ export default function ProductCard({ product }) {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        e.stopPropagation(); // prevent navigation to product detail
+        e.stopPropagation();
         addToCart(product);
     };
 

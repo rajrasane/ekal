@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { CheckCircle2 } from "lucide-react";
 
 type Step = "request" | "sent";
 
@@ -17,7 +18,6 @@ export default function ForgotPasswordPage() {
         setLoading(true);
 
         try {
-            // 🔧 Replace with your Spring Boot backend URL
             const res = await fetch("http://localhost:8080/api/auth/forgot-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -39,32 +39,22 @@ export default function ForgotPasswordPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 px-4">
+        <div className="min-h-[80vh] flex items-center justify-center bg-zinc-50 px-4 py-12">
             <div className="w-full max-w-md">
 
-                {/* ── Step 1 : Enter email ── */}
                 {step === "request" && (
                     <>
-                        {/* Icon + heading */}
                         <div className="text-center mb-8">
-                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-purple-600/20 border border-purple-500/30 mb-4 backdrop-blur-sm">
-                                <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
-                                        d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                                </svg>
-                            </div>
-                            <h1 className="text-3xl font-bold text-white tracking-tight">Forgot password?</h1>
-                            <p className="text-slate-400 mt-1 text-sm">
+                            <h1 className="font-outfit text-3xl font-semibold text-[#111] tracking-tight">Forgot password?</h1>
+                            <p className="text-zinc-500 mt-2 text-sm">
                                 Enter your email and we&apos;ll send you a reset link
                             </p>
                         </div>
 
-                        {/* Form card */}
-                        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8 shadow-2xl">
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                {/* Email */}
+                        <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm">
+                            <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1.5">
+                                    <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
                                         Email address
                                     </label>
                                     <input
@@ -75,13 +65,12 @@ export default function ForgotPasswordPage() {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="you@example.com"
-                                        className="w-full px-4 py-3 rounded-xl bg-white/8 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/60 focus:border-purple-500/60 transition-all text-sm"
+                                        className="w-full px-4 py-3 rounded-xl border border-zinc-200 bg-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-colors"
                                     />
                                 </div>
 
-                                {/* Error */}
                                 {error && (
-                                    <div className="flex items-center gap-2 text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-sm">
+                                    <div className="flex items-center gap-2 text-red-500 bg-red-50 border border-red-100 rounded-xl px-4 py-3 text-sm">
                                         <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                                         </svg>
@@ -89,16 +78,15 @@ export default function ForgotPasswordPage() {
                                     </div>
                                 )}
 
-                                {/* Submit */}
                                 <button
                                     id="forgot-password-btn"
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:bg-purple-600/50 disabled:cursor-not-allowed text-white font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-purple-900/40 mt-2"
+                                    className="w-full h-12 flex items-center justify-center rounded-xl bg-black text-white font-medium hover:bg-zinc-800 disabled:opacity-50 transition-colors shadow-md active:scale-[0.98] mt-2"
                                 >
                                     {loading ? (
                                         <>
-                                            <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                            <svg className="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                             </svg>
@@ -110,10 +98,9 @@ export default function ForgotPasswordPage() {
                                 </button>
                             </form>
 
-                            {/* Back to login */}
-                            <p className="text-center text-sm text-slate-400 mt-6">
+                            <p className="text-center text-sm text-zinc-500 mt-8">
                                 Remember your password?{" "}
-                                <Link href="/auth/login" className="text-purple-400 hover:text-purple-300 font-medium transition-colors">
+                                <Link href="/login" className="text-black hover:underline underline-offset-4 font-medium transition-colors">
                                     Sign in
                                 </Link>
                             </p>
@@ -121,38 +108,34 @@ export default function ForgotPasswordPage() {
                     </>
                 )}
 
-                {/* ── Step 2 : Email sent confirmation ── */}
                 {step === "sent" && (
                     <>
-                        <div className="text-center mb-8">
-                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-green-600/20 border border-green-500/30 mb-4 backdrop-blur-sm">
-                                <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
+                        <div className="text-center mb-8 flex flex-col items-center">
+                            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-6 text-green-500">
+                                <CheckCircle2 size={32} strokeWidth={1.5} />
                             </div>
-                            <h1 className="text-3xl font-bold text-white tracking-tight">Check your inbox</h1>
-                            <p className="text-slate-400 mt-1 text-sm">
+                            <h1 className="font-outfit text-3xl font-semibold text-[#111] tracking-tight">Check your inbox</h1>
+                            <p className="text-zinc-500 mt-2 text-sm">
                                 We sent a reset link to{" "}
-                                <span className="text-purple-400 font-medium">{email}</span>
+                                <span className="text-black font-medium">{email}</span>
                             </p>
                         </div>
 
-                        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-8 shadow-2xl space-y-5">
-                            <p className="text-slate-400 text-sm text-center leading-relaxed">
+                        <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm space-y-6">
+                            <p className="text-zinc-600 text-sm text-center leading-relaxed">
                                 Click the link in the email to reset your password. If you don&apos;t see it, check your spam folder.
                             </p>
 
-                            {/* Resend */}
                             <button
                                 onClick={() => { setStep("request"); setError(""); }}
-                                className="w-full py-3 rounded-xl border border-white/10 hover:border-white/20 text-slate-300 hover:text-white font-medium text-sm transition-all duration-200"
+                                className="w-full h-12 flex items-center justify-center rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-black font-medium transition-colors"
                             >
                                 Try a different email
                             </button>
 
-                            <p className="text-center text-sm text-slate-400">
-                                <Link href="/auth/login" className="text-purple-400 hover:text-purple-300 font-medium transition-colors">
-                                    ← Back to Sign in
+                            <p className="text-center text-sm text-zinc-500">
+                                <Link href="/login" className="text-black hover:underline underline-offset-4 font-medium transition-colors">
+                                    &larr; Back to Sign in
                                 </Link>
                             </p>
                         </div>

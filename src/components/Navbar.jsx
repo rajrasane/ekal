@@ -83,7 +83,7 @@ export default function Navbar() {
                         {/* Login button - shown only when not logged in */}
                         {!isLoggedIn && (
                             <Link
-                                href="/auth/login"
+                                href="/login"
                                 className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-black transition-colors border border-zinc-200 hover:border-zinc-400 rounded-full px-4 py-1.5"
                             >
                                 Login
@@ -159,7 +159,7 @@ export default function Navbar() {
                             {/* Login link in mobile menu */}
                             {!isLoggedIn && (
                                 <Link
-                                    href="/auth/login"
+                                    href="/login"
                                     className="border-b border-zinc-100 pb-4 text-zinc-500 hover:text-black transition-colors"
                                 >
                                     Login

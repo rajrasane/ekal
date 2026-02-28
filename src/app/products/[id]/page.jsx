@@ -129,7 +129,7 @@ export default function ProductDetailPage() {
                             {product.name}
                         </h1>
                         <p className="text-2xl font-semibold text-black tabular-nums">
-                            ₹{product.price.toLocaleString("en-IN")}
+                            ₹{((product.price)/100).toFixed(2)}
                         </p>
                     </div>
 

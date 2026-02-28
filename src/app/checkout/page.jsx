@@ -218,7 +218,7 @@ export default function CheckoutPage() {
                                         <p className="text-zinc-500 text-xs mt-0.5">{item.category}</p>
                                     </div>
                                     <p className="font-medium text-sm tabular-nums text-black shrink-0">
-                                        ₹{(item.price * item.quantity).toLocaleString("en-IN")}
+                                        ₹{((item.price * item.quantity)/100).toFixed(2)}
                                     </p>
                                 </div>
                             ))}
@@ -227,22 +227,22 @@ export default function CheckoutPage() {
                         <div className="space-y-3 text-sm mb-6 border-t border-black/5 pt-6">
                             <div className="flex justify-between">
                                 <span className="text-zinc-500">Subtotal</span>
-                                <span className="tabular-nums">₹{subtotal.toLocaleString("en-IN")}</span>
+                                <span className="tabular-nums">₹{(subtotal/100).toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-zinc-500">Shipping</span>
-                                <span className="tabular-nums">₹{shipping.toLocaleString("en-IN")}</span>
+                                <span className="tabular-nums">₹{(shipping/100).toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-zinc-500">Taxes (GST)</span>
-                                <span className="tabular-nums">₹{taxes.toLocaleString("en-IN")}</span>
+                                <span className="tabular-nums">₹{(taxes/100).toFixed(2)}</span>
                             </div>
                         </div>
 
                         <div className="flex justify-between items-center border-t border-black/5 pt-6">
                             <span className="font-medium text-black">Total</span>
                             <span className="font-outfit text-2xl font-semibold tabular-nums text-black">
-                                ₹{total.toLocaleString("en-IN")}
+                                ₹{(total/100).toFixed(2)}
                             </span>
                         </div>
 

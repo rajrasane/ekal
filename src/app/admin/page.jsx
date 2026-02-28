@@ -25,7 +25,7 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mt-6">
                 <div className="p-5 bg-white rounded-lg shadow border-l-4 border-blue-500">
                     <p className="text-sm text-gray-500">Total Sales</p>
-                    <p className="mt-2 text-2xl font-semibold">¥{(totalSales/100).toFixed(2)}</p>
+                    <p className="mt-2 text-2xl font-semibold">₹{(totalSales/100).toFixed(2)}</p>
                 </div>
                 <div className="p-5 bg-white rounded-lg shadow border-l-4 border-purple-500">
                     <p className="text-sm text-gray-500">Orders</p>

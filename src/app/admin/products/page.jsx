@@ -91,7 +91,7 @@ export default function AdminProducts() {
                                 {products.map(p => (
                                     <tr key={p.id} className="border-t">
                                         <td className="px-3 py-3">{p.name}</td>
-                                        <td className="px-3 py-3">¥{(p.price/100).toFixed(2)}</td>
+                                        <td className="px-3 py-3">₹{(p.price/100).toFixed(2)}</td>
                                         <td className={`px-3 py-3 ${p.stock === 0 ? 'text-red-600' : p.stock < 5 ? 'text-yellow-600' : ''}`}>{p.stock}</td>
                                         <td className="px-3 py-3">
                                             <button className="text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded" onClick={()=>startEdit(p)}>Edit</button>

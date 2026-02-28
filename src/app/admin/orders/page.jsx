@@ -34,7 +34,7 @@ export default function AdminOrders() {
                             <tr key={o.id} className={`border-t hover:bg-gray-50 transition-colors ${o.status === 'cancelled' ? 'bg-red-50' : ''}`}>
                                 <td className="px-4 py-3">{o.id}</td>
                                 <td className="px-4 py-3"><StatusBadge type={o.status} /></td>
-                                <td className="px-4 py-3">¥{((o.total||0)/100).toFixed(2)}</td>
+                                <td className="px-4 py-3">₹{((o.total||0)/100).toFixed(2)}</td>
                                 <td className="px-4 py-3">
                                     <select className="border rounded px-2 py-1 text-sm" value={o.status} onChange={(e)=>setStatus(o.id, e.target.value)}>
                                         <option value="processing">processing</option>

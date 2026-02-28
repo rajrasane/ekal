@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 
-// client-localstorage-schema: versioning local storage
 const CART_STORAGE_KEY = "ekal_cart_v1";
 
 const CartContext = createContext(null);

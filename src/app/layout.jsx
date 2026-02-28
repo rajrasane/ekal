@@ -3,6 +3,7 @@ import "./globals.css";
 import { CartProvider } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],

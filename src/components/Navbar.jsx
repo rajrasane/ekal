@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
+import { isAuthenticated } from "../lib/auth";
 
 const NAV_LINKS = [
     { href: "/", label: "Shop" },
@@ -15,8 +16,17 @@ const NAV_LINKS = [
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const pathname = usePathname();
     const { totalItems } = useCart();
+
+    // Sync auth state on mount and whenever localStorage changes (e.g. login/logout in another tab)
+    useEffect(() => {
+        setIsLoggedIn(isAuthenticated());
+        const syncAuth = () => setIsLoggedIn(isAuthenticated());
+        window.addEventListener("storage", syncAuth);
+        return () => window.removeEventListener("storage", syncAuth);
+    }, []);
 
     const handleScroll = useCallback(() => {
         setIsScrolled(window.scrollY > 20);
@@ -70,7 +80,23 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex items-center gap-5">
-                        {/* Search - placeholder for now */}
+                          <Link
+                href="/admin"
+                className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-black transition-colors border border-zinc-200 hover:border-zinc-400 rounded-full px-4 py-1.5"
+              >
+                Admin
+              </Link>
+                        {/* Login button - shown only when not logged in */}
+                        {!isLoggedIn && (
+                            <Link
+                                href="/login"
+                                className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-black transition-colors border border-zinc-200 hover:border-zinc-400 rounded-full px-4 py-1.5"
+                            >
+                                Login
+                            </Link>
+                        )}
+
+                        {/* Search - Not implemented for now */}
                         <button
                             aria-label="Search items"
                             className="text-zinc-600 hover:text-black transition-colors hidden sm:block p-1"
@@ -136,6 +162,15 @@ export default function Navbar() {
                                     {link.label}
                                 </Link>
                             ))}
+                            {/* Login link in mobile menu */}
+                            {!isLoggedIn && (
+                                <Link
+                                    href="/login"
+                                    className="border-b border-zinc-100 pb-4 text-zinc-500 hover:text-black transition-colors"
+                                >
+                                    Login
+                                </Link>
+                            )}
                             <div className="mt-8 relative">
                                 <Search
                                     size={20}

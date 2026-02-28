@@ -102,7 +102,8 @@ function HomeContent() {
             <div className="flex items-center justify-center py-32">
               <Loader2 className="animate-spin text-zinc-300 w-8 h-8" />
             </div>
-          ) : products.length > 0 ? (
+          ) : products.length > 0 
+            ? (
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-10 sm:gap-x-8 sm:gap-y-12">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />

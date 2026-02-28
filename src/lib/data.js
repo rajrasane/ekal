@@ -170,13 +170,10 @@ export const CATEGORIES = [
     { id: "clothing", name: "Clothing" },
 ];
 
-/**
- * Simulates network latency
- */
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function getProducts({ page = 1, limit = 6, category = "all", search = "", sort = "newest" }) {
-    await delay(800); // simulate realistic latency
+    await delay(800);
 
     let filtered = [...MOCK_PRODUCTS];
 
@@ -192,12 +189,11 @@ export async function getProducts({ page = 1, limit = 6, category = "all", searc
         );
     }
 
-    // Sorting
     if (sort === "price-low") {
         filtered.sort((a, b) => a.price - b.price);
     } else if (sort === "price-high") {
         filtered.sort((a, b) => b.price - a.price);
-    } // 'newest' uses default array order in this mock
+    }
 
     const total = filtered.length;
     const start = (page - 1) * limit;
@@ -221,21 +217,19 @@ export async function getProductById(id) {
 export async function getRelatedProducts(id, limit = 3) {
     const current = MOCK_PRODUCTS.find(p => p.id === id);
     if (!current) return [];
-    // simple mock logic: same category or fallback to all
     const related = MOCK_PRODUCTS.filter(p => p.id !== id && p.category === current.category);
     return related.slice(0, limit);
 }
 
-// simulate creating an order
 export async function placeOrder(orderData) {
     await delay(1200);
     const newOrder = {
         id: `ord_${Math.random().toString(36).substr(2, 9)}`,
         createdAt: new Date().toISOString(),
-        status: "processing", // pending -> processing -> shipped
+        status: "processing",
         ...orderData
     };
-    orders.unshift(newOrder); // Add to front of history
+    orders.unshift(newOrder);
     return newOrder;
 }
 

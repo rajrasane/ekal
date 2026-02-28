@@ -5,12 +5,35 @@ import StatusBadge from "../../../components/StatusBadge";
 
 export default function AdminOrders() {
     const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    useEffect(() => { getOrderHistory().then(setOrders); }, []);
+    useEffect(() => {
+        const loadOrders = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const data = await getOrderHistory();
+                setOrders(data);
+            } catch (err) {
+                setError(`Failed to load orders: ${err.message || 'Unknown error'}`);
+                console.error('Order history error:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadOrders();
+    }, []);
 
     const setStatus = async (id, status) => {
-        const updated = await updateOrderStatus(id, status);
-        setOrders(o => o.map(x => x.id === updated.id ? updated : x));
+        setError(null);
+        try {
+            const updated = await updateOrderStatus(id, status);
+            setOrders(o => o.map(x => x.id === updated.id ? updated : x));
+        } catch (err) {
+            setError(`Failed to update order status: ${err.message || 'Unknown error'}`);
+            console.error('Status update error:', err);
+        }
     };
 
     return (
@@ -20,6 +43,10 @@ export default function AdminOrders() {
             </div>
 
             <div className="mt-6 bg-white rounded shadow overflow-auto">
+                {error && <div className="p-4 bg-red-100 text-red-700 border-b border-red-200">{error}</div>}
+                {loading ? (
+                    <div className="p-4 text-center text-gray-600">Loading orders...</div>
+                ) : (
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr className="text-left text-sm text-gray-600">
@@ -47,6 +74,7 @@ export default function AdminOrders() {
                         ))}
                     </tbody>
                 </table>
+                )}
             </div>
         </section>
     );

@@ -7,7 +7,7 @@ export default function AdminSidebar() {
         <aside className="w-60 p-6 h-screen bg-gray-800 text-white">
             <div className="mb-6">
                 <h3 className="text-lg font-semibold">Admin Panel</h3>
-                <p className="text-sm text-gray-400">Manage the store</p>
+                
             </div>
             <nav>
                 <ul className="space-y-2">

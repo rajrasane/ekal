@@ -42,7 +42,7 @@ export default function AdminDashboard() {
             </div>
 
             <section className="mt-8">
-                <h2 className="text-lg font-medium">Inventory Overview</h2>
+                <h2 className="text-lg font-medium">Product Overview</h2>
                 <p className="text-sm text-gray-600 mt-2">{products.length} products in catalog</p>
             </section>
         </section>

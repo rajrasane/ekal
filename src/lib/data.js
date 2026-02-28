@@ -1,4 +1,18 @@
-let orders = [];
+// Mock memory state to mimic database relationships
+let orders = [
+    {
+        id: "ord_demo1",
+        createdAt: new Date().toISOString(),
+        status: "processing",
+        total: 12999
+    },
+    {
+        id: "ord_demo2",
+        createdAt: new Date().toISOString(),
+        status: "shipped",
+        total: 45000
+    }
+];
 
 const MOCK_PRODUCTS = [
     {
@@ -130,6 +144,22 @@ const MOCK_PRODUCTS = [
     }
 ];
 
+// In-memory users for admin management
+let USERS = [
+    { id: "u_1", name: "Admin User", email: "admin@example.com", role: "admin" },
+    { id: "u_2", name: "Jane Doe", email: "jane@example.com", role: "customer" },
+    { id: "u_3", name: "John Smith", email: "john@example.com", role: "customer" }
+];
+
+// Simple subscriber pattern to simulate real-time updates for products
+let productListeners = [];
+const notifyProductListeners = () => {
+    productListeners.forEach((cb) => {
+        try { cb(MOCK_PRODUCTS); } catch (e) { /* noop */ }
+    });
+};
+
+
 export const CATEGORIES = [
     { id: "all", name: "All Products" },
     { id: "furniture", name: "Furniture" },
@@ -206,4 +236,67 @@ export async function placeOrder(orderData) {
 export async function getOrderHistory() {
     await delay(800);
     return orders;
+}
+
+// --- Admin helpers: Products CRUD, subscriptions, Users, and Order updates ---
+export async function getAllProducts() {
+    await delay(300);
+    return MOCK_PRODUCTS;
+}
+
+export async function createProduct(product) {
+    await delay(500);
+    const newProduct = { id: `p_${Math.random().toString(36).substr(2, 9)}`, ...product };
+    MOCK_PRODUCTS.unshift(newProduct);
+    notifyProductListeners();
+    return newProduct;
+}
+
+export async function updateProduct(id, updates) {
+    await delay(400);
+    const idx = MOCK_PRODUCTS.findIndex(p => p.id === id);
+    if (idx === -1) throw new Error('Product not found');
+    MOCK_PRODUCTS[idx] = { ...MOCK_PRODUCTS[idx], ...updates };
+    notifyProductListeners();
+    return MOCK_PRODUCTS[idx];
+}
+
+export async function deleteProduct(id) {
+    await delay(300);
+    const idx = MOCK_PRODUCTS.findIndex(p => p.id === id);
+    if (idx === -1) throw new Error('Product not found');
+    const removed = MOCK_PRODUCTS.splice(idx, 1)[0];
+    notifyProductListeners();
+    return removed;
+}
+
+export function subscribeProducts(callback) {
+    productListeners.push(callback);
+    // send initial state
+    try { callback(MOCK_PRODUCTS); } catch (e) { }
+    return () => { productListeners = productListeners.filter(cb => cb !== callback); };
+}
+
+export async function getUsers() {
+    await delay(300);
+    return USERS;
+}
+
+export async function updateUserRole(id, role) {
+    await delay(300);
+    const idx = USERS.findIndex(u => u.id === id);
+    if (idx === -1) throw new Error('User not found');
+    USERS[idx].role = role;
+    return USERS[idx];
+}
+
+export async function updateOrderStatus(orderId, status) {
+    await delay(300);
+    const idx = orders.findIndex(o => o.id === orderId);
+    if (idx === -1) throw new Error('Order not found');
+    // allow a few statuses for demo
+    const valid = ["processing", "shipped", "delivered", "cancelled"];
+    if (!valid.includes(status)) throw new Error('Invalid status');
+    orders[idx].status = status;
+    return orders[idx];
 }

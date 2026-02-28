@@ -57,7 +57,7 @@ export default function ProductCard({ product }) {
                     </p>
                 </div>
                 <p className="font-semibold text-lg text-[#111] tabular-nums whitespace-nowrap shrink-0">
-                    ₹{product.price.toLocaleString("en-IN")}
+                    ₹{((product.price)/100).toFixed(2)}
                 </p>
             </div>
 

@@ -67,7 +67,7 @@ export default function CartPage() {
                                             </Link>
                                             <p className="text-sm text-zinc-500 capitalize">{item.category}</p>
                                         </div>
-                                        <p className="font-semibold text-base sm:text-lg tabular-nums whitespace-nowrap">₹{item.price.toLocaleString("en-IN")}</p>
+                                        <p className="font-semibold text-base sm:text-lg tabular-nums whitespace-nowrap">₹{((item.price)/100).toFixed(2)}</p>
                                     </div>
 
                                     <div className="flex items-center justify-between mt-auto">
@@ -116,22 +116,22 @@ export default function CartPage() {
                         <div className="space-y-4 text-sm mb-6 border-b border-black/5 pb-6">
                             <div className="flex justify-between">
                                 <span className="text-zinc-500">Subtotal</span>
-                                <span className="font-medium tabular-nums">₹{subtotal.toLocaleString("en-IN")}</span>
+                                <span className="font-medium tabular-nums">₹{(subtotal/100).toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-zinc-500">Shipping estimate</span>
-                                <span className="font-medium tabular-nums">₹{shipping.toLocaleString("en-IN")}</span>
+                                <span className="font-medium tabular-nums">₹{(shipping/100).toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-zinc-500">Tax estimate</span>
-                                <span className="font-medium tabular-nums">₹{taxes.toLocaleString("en-IN")}</span>
+                                <span className="font-medium tabular-nums">₹{(taxes/100).toFixed(2)}</span>
                             </div>
                         </div>
 
                         <div className="flex justify-between items-end mb-8">
                             <span className="font-medium text-black">Total</span>
                             <span className="font-outfit text-2xl font-semibold tabular-nums text-black">
-                                ₹{total.toLocaleString("en-IN")}
+                                ₹{(total/100).toFixed(2)}
                             </span>
                         </div>
 

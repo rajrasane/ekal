@@ -174,7 +174,7 @@ export default function OrdersPage() {
                                             </Link>
                                             <p className="text-zinc-500 text-sm mt-1 mb-2 capitalize">{item.category}</p>
                                             <div className="flex items-center gap-4 text-sm font-medium">
-                                                <span className="tabular-nums">₹{item.price.toLocaleString('en-IN')}</span>
+                                                <span className="tabular-nums">₹{((item.price)/100).toFixed(2)}</span>
                                                 <span className="text-zinc-400">Qty: {item.quantity}</span>
                                             </div>
                                         </div>

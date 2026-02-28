@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getOrderHistory, updateOrderStatus } from "../../../lib/data";
+import StatusBadge from "../../../components/StatusBadge";
 
 export default function AdminOrders() {
     const [orders, setOrders] = useState([]);
@@ -30,14 +31,15 @@ export default function AdminOrders() {
                     </thead>
                     <tbody className="text-sm">
                         {orders.map(o => (
-                            <tr key={o.id} className="border-t">
+                            <tr key={o.id} className={`border-t hover:bg-gray-50 transition-colors ${o.status === 'cancelled' ? 'bg-red-50' : ''}`}>
                                 <td className="px-4 py-3">{o.id}</td>
-                                <td className="px-4 py-3 capitalize">{o.status}</td>
+                                <td className="px-4 py-3"><StatusBadge type={o.status} /></td>
                                 <td className="px-4 py-3">¥{((o.total||0)/100).toFixed(2)}</td>
                                 <td className="px-4 py-3">
                                     <select className="border rounded px-2 py-1 text-sm" value={o.status} onChange={(e)=>setStatus(o.id, e.target.value)}>
                                         <option value="processing">processing</option>
                                         <option value="shipped">shipped</option>
+                                        <option value="delivered">delivered</option>
                                         <option value="cancelled">cancelled</option>
                                     </select>
                                 </td>

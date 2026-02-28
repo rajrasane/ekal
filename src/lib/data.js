@@ -1,5 +1,18 @@
 // Mock memory state to mimic database relationships
-let orders = [];
+let orders = [
+    {
+        id: "ord_demo1",
+        createdAt: new Date().toISOString(),
+        status: "processing",
+        total: 12999
+    },
+    {
+        id: "ord_demo2",
+        createdAt: new Date().toISOString(),
+        status: "shipped",
+        total: 45000
+    }
+];
 
 const MOCK_PRODUCTS = [
     {
@@ -287,6 +300,9 @@ export async function updateOrderStatus(orderId, status) {
     await delay(300);
     const idx = orders.findIndex(o => o.id === orderId);
     if (idx === -1) throw new Error('Order not found');
+    // allow a few statuses for demo
+    const valid = ["processing", "shipped", "delivered", "cancelled"];
+    if (!valid.includes(status)) throw new Error('Invalid status');
     orders[idx].status = status;
     return orders[idx];
 }

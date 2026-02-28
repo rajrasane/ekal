@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllProducts, createProduct, updateProduct, deleteProduct } from "../../../lib/data";
+import { getAllProducts, createProduct, updateProduct, deleteProduct, subscribeProducts } from "../../../lib/data";
 
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
@@ -15,7 +15,12 @@ export default function AdminProducts() {
         setLoading(false);
     };
 
-    useEffect(() => { load(); }, []);
+    useEffect(() => {
+        load();
+        // subscribe for real-time updates
+        const unsubscribe = subscribeProducts(setProducts);
+        return () => unsubscribe();
+    }, []);
 
     const handleCreate = async (e) => {
         e.preventDefault();
@@ -46,11 +51,11 @@ export default function AdminProducts() {
     return (
         <section>
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-semibold">Inventory Management</h1>
+                <h1 className="text-2xl font-semibold">Product Management</h1>
             </div>
 
             <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-1 bg-white p-4 rounded shadow">
+                <div className="lg:col-span-1 bg-white border border-gray-200 p-6 rounded-lg shadow">
                     <form onSubmit={editingId ? saveEdit : handleCreate} className="space-y-3">
                         <input className="w-full border rounded px-3 py-2" placeholder="Name" value={form.name} onChange={e=>setForm({...form, name:e.target.value})} />
                         <input className="w-full border rounded px-3 py-2" placeholder="Price (cents)" type="number" value={form.price} onChange={e=>setForm({...form, price:e.target.value})} />
@@ -64,7 +69,7 @@ export default function AdminProducts() {
                             <option value="clothing">Clothing</option>
                         </select>
                         <div className="flex gap-2">
-                            <button className="px-4 py-2 bg-blue-600 text-white rounded" type="submit">{editingId ? 'Save' : 'Create'}</button>
+                            <button className={`px-4 py-2 text-white rounded ${editingId ? 'bg-blue-600' : 'bg-green-600'}`} type="submit">{editingId ? 'Save' : 'Create'}</button>
                             {editingId && <button type="button" onClick={()=>{setEditingId(null); setForm({name:'',price:0,stock:0,category:'home'})}} className="px-4 py-2 border rounded">Cancel</button>}
                         </div>
                     </form>
@@ -87,10 +92,10 @@ export default function AdminProducts() {
                                     <tr key={p.id} className="border-t">
                                         <td className="px-3 py-3">{p.name}</td>
                                         <td className="px-3 py-3">¥{(p.price/100).toFixed(2)}</td>
-                                        <td className="px-3 py-3">{p.stock}</td>
+                                        <td className={`px-3 py-3 ${p.stock === 0 ? 'text-red-600' : p.stock < 5 ? 'text-yellow-600' : ''}`}>{p.stock}</td>
                                         <td className="px-3 py-3">
-                                            <button className="text-sm text-blue-600" onClick={()=>startEdit(p)}>Edit</button>
-                                            <button className="text-sm text-red-600 ml-4" onClick={()=>handleDelete(p.id)}>Delete</button>
+                                            <button className="text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded" onClick={()=>startEdit(p)}>Edit</button>
+                                            <button className="text-sm bg-red-100 text-red-600 px-2 py-1 rounded ml-2" onClick={()=>handleDelete(p.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 ))}

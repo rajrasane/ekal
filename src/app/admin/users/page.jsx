@@ -1,16 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getUsers, updateUserRole } from "../../../lib/data";
+import { getUsers } from "../../../lib/data";
+import StatusBadge from "../../../components/StatusBadge";
 
 export default function AdminUsers() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => { getUsers().then(setUsers); }, []);
 
-    const changeRole = async (id, role) => {
-        const updated = await updateUserRole(id, role);
-        setUsers(u => u.map(x => x.id === updated.id ? updated : x));
-    };
+    // roles come from login/user data; this panel is read‑only.
 
     return (
         <section>
@@ -33,10 +31,7 @@ export default function AdminUsers() {
                                 <td className="px-4 py-3">{u.name}</td>
                                 <td className="px-4 py-3">{u.email}</td>
                                 <td className="px-4 py-3">
-                                    <select className="border rounded px-2 py-1 text-sm" value={u.role} onChange={(e)=>changeRole(u.id, e.target.value)}>
-                                        <option value="admin">admin</option>
-                                        <option value="customer">customer</option>
-                                    </select>
+                                    <StatusBadge type={u.role} />
                                 </td>
                             </tr>
                         ))}

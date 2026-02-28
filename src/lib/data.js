@@ -1,18 +1,4 @@
-// Mock memory state to mimic database relationships
-let orders = [
-    {
-        id: "ord_demo1",
-        createdAt: new Date().toISOString(),
-        status: "processing",
-        total: 12999
-    },
-    {
-        id: "ord_demo2",
-        createdAt: new Date().toISOString(),
-        status: "shipped",
-        total: 45000
-    }
-];
+
 
 const MOCK_PRODUCTS = [
     {

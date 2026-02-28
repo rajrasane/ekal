@@ -80,12 +80,6 @@ export default function Navbar() {
                     </div>
 
                     <div className="flex items-center gap-5">
-                          <Link
-                href="/admin"
-                className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-black transition-colors border border-zinc-200 hover:border-zinc-400 rounded-full px-4 py-1.5"
-              >
-                Admin
-              </Link>
                         {/* Login button - shown only when not logged in */}
                         {!isLoggedIn && (
                             <Link
